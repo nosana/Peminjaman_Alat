@@ -52,16 +52,18 @@ namespace WebAPi.Repositories.Data
             return null;
         }
 
-        /*public int ChangePassword(string Email, string Password, string Passnew)
+        public int ChangePassword(ChangePassVM changePassVM)
         {
-           var data = myContext.Users.Where(u => u.Email == Email).SingleOrDefault();
-              
+
+            var data = myContext.Accounts
+                .Include(x => x.User)
+                .SingleOrDefault(x => x.User.Email.Equals(changePassVM.Email));
             if (data != null)
             {
-                var pass = myContext.Accounts.Where(a => a.Password == Password).SingleOrDefault();
-                if (Hashing.ValidatePassword(Password, pass.Password))
+
+                if (Hashing.ValidatePassword(changePassVM.OldPassword, data.Password))
                 {
-                    pass.Password = Hashing.HashPassword(Passnew);
+                    data.Password = Hashing.HashPassword(changePassVM.PasswordNew);
                     myContext.Entry(data).State = EntityState.Modified;
                     var result = myContext.SaveChanges();
                     if (result > 0)
@@ -74,6 +76,55 @@ namespace WebAPi.Repositories.Data
             }
 
             return 0;
-        }*/
+        }
+
+        public int ForgotPassword(ForgotPassVM forgotPassVm)
+        {
+            var data = myContext.Accounts
+           .Where(a => a.User.Email.Equals(forgotPassVm.Email) && a.User.FullName.Equals(forgotPassVm.Fullname)).SingleOrDefault();
+
+            if (data == null)
+            {
+
+                return 0;
+            }
+            else
+            {
+                data.Password = Hashing.HashPassword(forgotPassVm.PasswordNew);
+
+                myContext.Entry(data).State = EntityState.Modified;
+
+                var result = myContext.SaveChanges();
+                if (result > 0)
+                {
+                    return result;
+                }
+                return 0;
+            }
+            return 0;
+
+            /*var data = myContext.Accounts
+           .Include(x => x.User)
+
+           .SingleOrDefault(x => x.User.Email.Equals(forgotPassVm.Email) && x.User.FullName.Equals(forgotPassVm.Fullname));
+
+            if (data != null)
+            {
+
+                data.Password = Hashing.HashPassword(forgotPassVm.PasswordNew);
+
+                myContext.Entry(data).State = EntityState.Modified;
+
+                var result = myContext.SaveChanges();
+                if (result > 0)
+                {
+                    return result;
+                }
+                return 0;
+            }
+            return 0;*/
+        }
     }
+
+    
 }

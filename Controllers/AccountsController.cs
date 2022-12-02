@@ -83,5 +83,79 @@ namespace WebAPi.Controllers
                 });
             }
         }
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("ChangePassword")]
+        public ActionResult ChangePassword(ChangePassVM changePassVM)
+        {
+            try
+            {
+                var result = _accountRepository.ChangePassword(changePassVM);
+                if (result == 0)
+                {
+                    return Ok(new
+                    {
+                        StatusCode = 400,
+                        Message = "Ganti password tidak berhasil"
+
+                    });
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        StatusCode = 200,
+                        Message = "Ganti Password Baru Sudah Berhasil"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("ForgotPassword")]
+        
+        public ActionResult ForgotPassword(ForgotPassVM forgotPassVM)
+        {
+            try
+            {
+                var result = _accountRepository.ForgotPassword(forgotPassVM);
+                if (result == 0)
+                {
+                    return Ok(new
+                    {
+                        StatusCode = 200,
+                        Message = "lupa password gagal"
+                    });
+
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        StatusCode = 200,
+                        Message = "Password lama telah di ganti"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = ex.Message
+                });
+            }
+        }
+
+
     }
 }
