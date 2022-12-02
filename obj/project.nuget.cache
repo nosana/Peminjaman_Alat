@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ToD5+cXk9l8NABo9CBk+wi0RrBdySCB9yX//P7EsEZEifL1Th9X1cv6dtyL79GGjWgSHZa/wb6PODYxD7vv8BQ==",
+  "dgSpecHash": "zvTY5KvuzsEuvspFswl/15w4SIrVA2F6QUm5Aahk6izOso1hnBXW9a5QPQeTipehms9sQoOJ0H7b2UyYRJWBpA==",
   "success": true,
-  "projectFilePath": "D:\\Coding\\WebAPi\\WebAPi.csproj",
+  "projectFilePath": "D:\\Coding\\segmen4\\WebAPi\\WebAPi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",

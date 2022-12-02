@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Coding\\WebAPi\\WebAPi.csproj": {}
+    "D:\\Coding\\segmen4\\WebAPi\\WebAPi.csproj": {}
   },
   "projects": {
-    "D:\\Coding\\WebAPi\\WebAPi.csproj": {
+    "D:\\Coding\\segmen4\\WebAPi\\WebAPi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Coding\\WebAPi\\WebAPi.csproj",
+        "projectUniqueName": "D:\\Coding\\segmen4\\WebAPi\\WebAPi.csproj",
         "projectName": "WebAPi",
-        "projectPath": "D:\\Coding\\WebAPi\\WebAPi.csproj",
+        "projectPath": "D:\\Coding\\segmen4\\WebAPi\\WebAPi.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\Coding\\WebAPi\\obj\\",
+        "outputPath": "D:\\Coding\\segmen4\\WebAPi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
