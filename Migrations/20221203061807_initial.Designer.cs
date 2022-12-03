@@ -12,8 +12,8 @@ using WebAPi.Context;
 namespace WebAPi.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20221202043053_update")]
-    partial class update
+    [Migration("20221203061807_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,8 @@ namespace WebAPi.Migrations
 
             modelBuilder.Entity("WebAPi.Models.Account", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -40,8 +40,8 @@ namespace WebAPi.Migrations
 
             modelBuilder.Entity("WebAPi.Models.AccountRole", b =>
                 {
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -120,18 +120,15 @@ namespace WebAPi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -212,11 +209,8 @@ namespace WebAPi.Migrations
 
             modelBuilder.Entity("WebAPi.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -253,92 +247,92 @@ namespace WebAPi.Migrations
 
             modelBuilder.Entity("WebAPi.Models.Account", b =>
                 {
-                    b.HasOne("WebAPi.Models.User", "User")
-                        .WithOne("Account")
+                    b.HasOne("WebAPi.Models.User", "Users")
+                        .WithOne("Accounts")
                         .HasForeignKey("WebAPi.Models.Account", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("WebAPi.Models.AccountRole", b =>
                 {
-                    b.HasOne("WebAPi.Models.Account", "Account")
+                    b.HasOne("WebAPi.Models.Account", "Accounts")
                         .WithMany("AccountRoles")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebAPi.Models.Role", "Role")
+                    b.HasOne("WebAPi.Models.Role", "Roles")
                         .WithMany("AccountRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.Navigation("Accounts");
 
-                    b.Navigation("Role");
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("WebAPi.Models.Item", b =>
                 {
-                    b.HasOne("WebAPi.Models.Category", "Category")
+                    b.HasOne("WebAPi.Models.Category", "Categorys")
                         .WithMany("Items")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("Categorys");
                 });
 
             modelBuilder.Entity("WebAPi.Models.RequestItem", b =>
                 {
-                    b.HasOne("WebAPi.Models.Account", "Account")
+                    b.HasOne("WebAPi.Models.Account", "Accounts")
                         .WithMany("RequestItems")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebAPi.Models.Item", "Item")
+                    b.HasOne("WebAPi.Models.Item", "Items")
                         .WithMany("RequestItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebAPi.Models.Status", "Status")
+                    b.HasOne("WebAPi.Models.Status", "Statuses")
                         .WithMany("RequestItems")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.Navigation("Accounts");
 
-                    b.Navigation("Item");
+                    b.Navigation("Items");
 
-                    b.Navigation("Status");
+                    b.Navigation("Statuses");
                 });
 
             modelBuilder.Entity("WebAPi.Models.ReturnItem", b =>
                 {
-                    b.HasOne("WebAPi.Models.RequestItem", "RequestItem")
-                        .WithOne("ReturnItem")
+                    b.HasOne("WebAPi.Models.RequestItem", "RequestItems")
+                        .WithOne("ReturnItems")
                         .HasForeignKey("WebAPi.Models.ReturnItem", "RequestItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RequestItem");
+                    b.Navigation("RequestItems");
                 });
 
             modelBuilder.Entity("WebAPi.Models.User", b =>
                 {
-                    b.HasOne("WebAPi.Models.Department", "Department")
+                    b.HasOne("WebAPi.Models.Department", "Departments")
                         .WithMany("Users")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
+                    b.Navigation("Departments");
                 });
 
             modelBuilder.Entity("WebAPi.Models.Account", b =>
@@ -365,7 +359,7 @@ namespace WebAPi.Migrations
 
             modelBuilder.Entity("WebAPi.Models.RequestItem", b =>
                 {
-                    b.Navigation("ReturnItem")
+                    b.Navigation("ReturnItems")
                         .IsRequired();
                 });
 
@@ -381,7 +375,7 @@ namespace WebAPi.Migrations
 
             modelBuilder.Entity("WebAPi.Models.User", b =>
                 {
-                    b.Navigation("Account")
+                    b.Navigation("Accounts")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

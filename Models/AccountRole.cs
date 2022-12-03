@@ -19,13 +19,13 @@ namespace WebAPi.Models
         }*/
 
         
-        public int AccountId { get; set; }
+        public string AccountId { get; set; }
         
         public int RoleId { get; set; }
 
         [JsonIgnore]
-        public virtual Account Account { get; set; }
+        public virtual Account Accounts { get; set; }
         [JsonIgnore]
-        public virtual Role Role { get; set; }
+        public virtual Role Roles { get; set; }
     }
 }

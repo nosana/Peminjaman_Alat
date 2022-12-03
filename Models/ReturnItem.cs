@@ -25,7 +25,7 @@ namespace WebAPi.Models
         public string Notes { get; set; }
 
         [JsonIgnore]
-        public virtual RequestItem RequestItem { get; set; }
+        public virtual RequestItem RequestItems { get; set; }
 
     }
 }

@@ -24,7 +24,7 @@ namespace WebAPi.Models
         }
 */
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FullName { get; set; }
         public string Gender { get; set; }
         public DateTime BirthDate { get; set; }
@@ -35,8 +35,8 @@ namespace WebAPi.Models
         public int DepartmentId { get; set; }
 
         [JsonIgnore]
-        public virtual Account Account { get; set; }
-        public virtual Department Department { get; set; }
+        public virtual Account Accounts { get; set; }
+        public virtual Department Departments { get; set; }
         
        
 

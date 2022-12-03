@@ -29,7 +29,7 @@ namespace WebAPi.Models
             public virtual ICollection<RequestItem> RequestItems { get; set; }
 
             [JsonIgnore]
-            public virtual Category Category { get; set; }
+            public virtual Category Categorys { get; set; }
         
     }
 }

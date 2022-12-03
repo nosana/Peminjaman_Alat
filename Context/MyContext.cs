@@ -24,48 +24,48 @@ namespace WebAPi.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-                .HasOne(a => a.Account)
-                .WithOne(b => b.User)
+                .HasOne(a => a.Accounts)
+                .WithOne(b => b.Users)
                 .HasForeignKey<Account>(b => b.Id);
 
             modelBuilder.Entity<Department>()
                 .HasMany(a => a.Users)
-                .WithOne(b => b.Department);
+                .WithOne(b => b.Departments);
 
             
 
             modelBuilder.Entity<AccountRole>()
                 .HasKey(ar => new { ar.AccountId, ar.RoleId });
             modelBuilder.Entity<AccountRole>()
-                .HasOne(ar => ar.Account)
+                .HasOne(ar => ar.Accounts)
                 .WithMany(a => a.AccountRoles)
                 .HasForeignKey(ar => ar.AccountId);
             modelBuilder.Entity<AccountRole>()
-                .HasOne(ar => ar.Role)
+                .HasOne(ar => ar.Roles)
                 .WithMany(r => r.AccountRoles)
                 .HasForeignKey(ar => ar.RoleId);
 
             
             modelBuilder.Entity<RequestItem>()
-                .HasOne(a => a.Account)
+                .HasOne(a => a.Accounts)
                 .WithMany(ri => ri.RequestItems)
                 .HasForeignKey(a => a.AccountId);
             modelBuilder.Entity<RequestItem>()
-                .HasOne(i => i.Item)
+                .HasOne(i => i.Items)
                 .WithMany(r => r.RequestItems)
                 .HasForeignKey(i => i.ItemId);
 
             modelBuilder.Entity<Status>()
                 .HasMany(a => a.RequestItems)
-                .WithOne(b => b.Status);
+                .WithOne(b => b.Statuses);
 
             modelBuilder.Entity<Category>()
                 .HasMany(a => a.Items)
-                .WithOne(b => b.Category);
+                .WithOne(b => b.Categorys);
 
             modelBuilder.Entity<ReturnItem>()
-                .HasOne(a => a.RequestItem)
-                .WithOne(b => b.ReturnItem)
+                .HasOne(a => a.RequestItems)
+                .WithOne(b => b.ReturnItems)
                 .HasForeignKey<ReturnItem>(b => b.RequestItemId);
 
         }

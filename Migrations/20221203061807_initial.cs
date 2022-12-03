@@ -75,8 +75,8 @@ namespace WebAPi.Migrations
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Categories_Quantity",
-                        column: x => x.Quantity,
+                        name: "FK_Items_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -86,8 +86,7 @@ namespace WebAPi.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -111,7 +110,7 @@ namespace WebAPi.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -129,7 +128,7 @@ namespace WebAPi.Migrations
                 name: "AccountRoles",
                 columns: table => new
                 {
-                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -155,11 +154,10 @@ namespace WebAPi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ItemId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -167,8 +165,8 @@ namespace WebAPi.Migrations
                 {
                     table.PrimaryKey("PK_RequestItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RequestItems_Accounts_UserId",
-                        column: x => x.UserId,
+                        name: "FK_RequestItems_Accounts_AccountId",
+                        column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -212,9 +210,14 @@ namespace WebAPi.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_Quantity",
+                name: "IX_Items_CategoryId",
                 table: "Items",
-                column: "Quantity");
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RequestItems_AccountId",
+                table: "RequestItems",
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RequestItems_ItemId",
@@ -225,11 +228,6 @@ namespace WebAPi.Migrations
                 name: "IX_RequestItems_StatusId",
                 table: "RequestItems",
                 column: "StatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestItems_UserId",
-                table: "RequestItems",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReturnItems_RequestItemId",

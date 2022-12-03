@@ -17,9 +17,47 @@ namespace WebAPi.Repositories.Data
         }
 
         [HttpPost]
-        public int Register(RegisterVM register)
+        public int Register(RegisterVM registerVM)
         {
-            User user = new User()
+            var id = myContext.Users.SingleOrDefault(x => x.Id.Equals(registerVM.Id));
+            var data = myContext.Users.SingleOrDefault(x => x.Email.Equals(registerVM.Email));
+            int result = 0;
+            if (id == null && data == null)
+            {
+                User user = new User()
+                {
+                    Id = registerVM.Id,
+                    FullName = registerVM.FullName,
+                    Gender = registerVM.Gender,
+                    BirthDate = registerVM.BirthDate,
+                    Address = registerVM.Address,
+                    Phone = registerVM.Phone,
+                    Email = registerVM.Email,
+                    DepartmentId = registerVM.DepartmentId
+                };
+                myContext.Users.Add(user);
+                //myContext.SaveChanges();
+
+                var accounts = new Account()
+                {
+                    Id = registerVM.Id,
+                    Password = Hashing.HashPassword(registerVM.Password)
+                };
+                myContext.Accounts.Add(accounts);
+                //myContext.SaveChanges();
+
+                var accountRoles = new AccountRole()
+                {
+                    AccountId = registerVM.Id,
+                    RoleId = registerVM.RoleId
+                };
+                myContext.AccountRoles.Add(accountRoles);
+                result = myContext.SaveChanges();
+            }
+
+            return result;
+
+            /*User user = new User()
             {
                 FullName = register.FullName,
                 Gender = register.Gender,
@@ -52,8 +90,10 @@ namespace WebAPi.Repositories.Data
                 }
                 return result;
             }
-            return 0;
-        
+            return 0;*/
+
+
+
         }
     }
 }

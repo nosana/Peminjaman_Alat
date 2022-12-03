@@ -90,8 +90,8 @@ namespace WebAPi.Controllers
         {
             try
             {
-                var result = _accountRepository.ChangePassword(changePassVM);
-                if (result == 0)
+                var data = _accountRepository.ChangePassword(changePassVM);
+                if (data == 0)
                 {
                     return Ok(new
                     {
@@ -127,8 +127,8 @@ namespace WebAPi.Controllers
         {
             try
             {
-                var result = _accountRepository.ForgotPassword(forgotPassVM);
-                if (result == 0)
+                var data = _accountRepository.ForgotPassword(forgotPassVM);
+                if (data == 0)
                 {
                     return Ok(new
                     {

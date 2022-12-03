@@ -18,11 +18,11 @@ namespace WebAPi.Models
         }*/
 
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Password { get; set; }
         [JsonIgnore]
-        public virtual User User { get; set; }
+        public virtual User Users { get; set; }
         [JsonIgnore]
         public virtual ICollection<AccountRole> AccountRoles { get; set; }
         [JsonIgnore]

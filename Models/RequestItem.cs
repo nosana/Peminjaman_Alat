@@ -24,22 +24,21 @@ namespace WebAPi.Models
 
         [Key]
         public int Id { get; set; }
-        public int AccountId { get; set; }
+        public String AccountId { get; set; }
         public int ItemId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Notes { get; set; }
         public int Quantity { get; set; }
         public int StatusId { get; set; }
 
         [JsonIgnore]
-        public virtual Account Account{ get; set; }
+        public virtual Account Accounts{ get; set; }
         [JsonIgnore]
-        public virtual Item Item { get; set; }
+        public virtual Item Items { get; set; }
         [JsonIgnore]
-        public virtual ReturnItem ReturnItem { get; set; }
+        public virtual ReturnItem ReturnItems { get; set; }
         [JsonIgnore]
-        public virtual Status Status { get; set; }
+        public virtual Status Statuses { get; set; }
 
     }
 }

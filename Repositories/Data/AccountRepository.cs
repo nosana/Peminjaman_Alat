@@ -16,10 +16,10 @@ namespace WebAPi.Repositories.Data
         }
 
         [HttpPost]
-        public ResponseLoginVm Login(LoginVM login)
+        public ResponseLoginVm Login(LoginVM loginVm)
         {
             ResponseLoginVm responseLogin = new ResponseLoginVm();
-            var data = myContext.Users.Where(u => u.Email == login.Email).SingleOrDefault();
+            var data = myContext.Users.Where(u => u.Email == loginVm.Email).SingleOrDefault();
             if (data == null)
             {
                 return responseLogin;
@@ -33,17 +33,17 @@ namespace WebAPi.Repositories.Data
                 }
                 else
                 {
-                    var validatePass = Hashing.ValidatePassword(login.Password, result.Password);
+                    var validatePass = Hashing.ValidatePassword(loginVm.Password, result.Password);
                     if (validatePass)
                     {
-                        var roles = myContext.Roles
-                        .Where(r => r.Id == result.Id).SingleOrDefault();
-                        
+                        var roles = myContext.AccountRoles
+                        .Where(r => r.AccountId == result.Id).SingleOrDefault();
 
+                        var rolename = myContext.Roles.Where(r => r.Id == roles.RoleId).SingleOrDefault();
                         responseLogin.Id = data.Id;
                         responseLogin.FullName = data.FullName;
                         responseLogin.Email = data.Email;
-                        responseLogin.Roles = roles.Name;
+                        responseLogin.Roles = rolename.Name;
 
                         return responseLogin;
                     }
@@ -56,8 +56,8 @@ namespace WebAPi.Repositories.Data
         {
 
             var data = myContext.Accounts
-                .Include(x => x.User)
-                .SingleOrDefault(x => x.User.Email.Equals(changePassVM.Email));
+                .Include(x => x.Users)
+                .SingleOrDefault(x => x.Users.Email.Equals(changePassVM.Email));
             if (data != null)
             {
 
@@ -81,7 +81,7 @@ namespace WebAPi.Repositories.Data
         public int ForgotPassword(ForgotPassVM forgotPassVm)
         {
             var data = myContext.Accounts
-           .Where(a => a.User.Email.Equals(forgotPassVm.Email) && a.User.FullName.Equals(forgotPassVm.Fullname)).SingleOrDefault();
+           .Where(a => a.Users.Email.Equals(forgotPassVm.Email) && a.Users.FullName.Equals(forgotPassVm.Fullname)).SingleOrDefault();
 
             if (data == null)
             {
